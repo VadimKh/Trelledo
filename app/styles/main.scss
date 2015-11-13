@@ -1,6 +1,8 @@
 // bower:scss
 // endbower
 
+@import "src/CircleTimer";
+
 body {
   background: #fafafa;
   font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
@@ -28,4 +30,7 @@ body {
   background: #ccc;
   color: #000;
   padding: 0.2em 0;
+}
+#timer {
+  color: seagreen;
 }

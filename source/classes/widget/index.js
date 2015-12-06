@@ -1,9 +1,9 @@
 "use strict";
 
 export default class Widget {
-    constructor(element) {
+    constructor(element, ...args) {
         this._container = element;
-        this._render();
+        this._render.apply(this, args);
     }
 
     _render(){

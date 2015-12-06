@@ -1,7 +1,7 @@
 "use strict";
 import './circle.styl';
 import template from './circle.jade';
-import Widget from '../widget';
+import Widget from '../../widget';
 
 const START_ANGLE_LEFT_HALF =  135;
 const START_ANGLE_RIGHT_HALF =  -45;
@@ -21,8 +21,7 @@ export default class CircleTimer extends Widget {
     return this._content;
   }
 
-  updateState(k) {
-    let dec = k - Math.floor(k);
+  updateState(dec) {
     let rightCoefficient = dec > .5 ? .5 : dec;
     let leftCoefficient = dec > .5 ? dec - .5 : 0;
 

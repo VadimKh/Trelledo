@@ -1,7 +1,7 @@
 "use strict";
 import './numeric.styl';
 import template from './numeric.jade';
-import Widget from '../widget';
+import Widget from '../../widget';
 
 const round = Math.round;
 const floor = Math.floor;
@@ -36,7 +36,10 @@ export default class NumericTimer extends Widget {
         let lastTime = this._getLastTime(k);
         let minute = floor(lastTime / 1000 / 60);
         let second = round((lastTime - minute * 1000 * 60) / 1000);
-
+        if(second === 60) {
+            minute += 1;
+            second = 0;
+        }
         return this._numberToString(minute) + ':' + this._numberToString(second);
     }
 

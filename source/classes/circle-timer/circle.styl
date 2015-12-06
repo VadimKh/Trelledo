@@ -1,0 +1,48 @@
+size = 300px
+border-size = 5px
+
+.circle-timer
+  position relative
+  width size
+  height: size
+  color: lightblue
+
+  &_left,
+  &_right
+    position absolute
+    top 0
+    bottom 0
+    width 50%
+    overflow hidden
+
+    &_half
+      position absolute
+      top 0
+      box-sizing border-box
+      height 100%
+      width 200%
+      border-radius 50%
+      border border-size solid transparent
+      border-left-color currentColor
+      border-top-color currentColor
+
+  &_left
+    left 0
+
+    &_half
+      left 0
+      transform rotate(135deg)
+
+  &_right
+    right 0
+
+    &_half
+      right 0
+      transform rotate(-45deg)
+
+  &_content
+    position absolute
+    top 10%
+    bottom 10%
+    left 10%
+    right 10%

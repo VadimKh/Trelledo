@@ -6,7 +6,5 @@ export default class Widget {
         this._render.apply(this, args);
     }
 
-    _render(){
-
-    }
+    _render(){ }
 }

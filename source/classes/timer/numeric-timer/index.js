@@ -1,38 +1,29 @@
 "use strict";
 import './numeric.styl';
 import template from './numeric.jade';
-import Widget from '../../widget';
+import BaseTimer from '../../widget/base.timer';
 
 const round = Math.round;
 const floor = Math.floor;
 
-export default class NumericTimer extends Widget {
-    constructor(element, interval) {
-        super(element);
-        this.interval = interval || 5 * 60 * 1000;
-    }
+export default class NumericTimer extends BaseTimer {
 
-    get interval(){
-        return this._interval;
-    }
+    get interval(){ return this._interval;}
+    set interval(interval) { this._interval = interval; }
 
-    set interval(interval) {
-        this._interval = interval;
-    }
-
-    _render(){
+    _render(interval){
         super._render();
+        this.interval = interval || 5 * 60 * 1000;
         this._container.innerHTML = template();
-        this._content = this._container.querySelector('.numeric-timer_content');
+        this._minutes = this._container.querySelector('.numeric-timer_minutes');
+        this._lastMinuteValue = 0;
+        this._lastSecondValue = 0;
+        this._seconds = this._container.querySelector('.numeric-timer_seconds');
         this.updateState();
     }
 
     updateState(k) {
-        k = k ||0;
-        this._content.innerHTML = this._getLastTimeFormatted(k);
-    }
-
-    _getLastTimeFormatted(k) {
+        k = k || 0;
         let lastTime = this._getLastTime(k);
         let minute = floor(lastTime / 1000 / 60);
         let second = round((lastTime - minute * 1000 * 60) / 1000);
@@ -40,7 +31,19 @@ export default class NumericTimer extends Widget {
             minute += 1;
             second = 0;
         }
-        return this._numberToString(minute) + ':' + this._numberToString(second);
+
+        this._renderTimer(this._numberToString(minute), this._numberToString(second));
+    }
+
+    _renderTimer(minute, second) {
+        if(minute !== this._lastMinuteValue) {
+            this._lastMinuteValue = minute;
+            this._minutes.innerHTML = this._lastMinuteValue;
+        }
+        if(second !== this._lastSecondValue) {
+            this._lastSecondValue = second;
+            this._seconds.innerHTML = this._lastSecondValue;
+        }
     }
 
     _numberToString(number) {

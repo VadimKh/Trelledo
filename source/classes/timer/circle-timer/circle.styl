@@ -4,8 +4,19 @@ border-size = 5px
 .circle-timer
   position relative
   width size
-  height: size
-  color: lightblue
+  height size
+  color #e22c2b
+
+  &:before
+    position absolute
+    content ' '
+    top 0
+    bottom 0
+    left 0
+    right 0
+
+    border-radius 50%
+    border border-size solid #19222b
 
   &_left,
   &_right
@@ -46,3 +57,30 @@ border-size = 5px
     bottom 10%
     left 10%
     right 10%
+
+  &_pause
+    &:before, &:after
+      display block
+      content ' '
+
+      position absolute
+      top 25%
+      bottom 25%
+
+      width 10px
+
+      background currentColor
+      border-radius 10px
+      z-index 1
+      -webkit-user-select none
+
+      opacity 0
+
+    &:before
+      left 40%
+    &:after
+      right 40%
+
+  .-state2 > & > &_pause
+    &:before, &:after
+      animation blink 3s infinite

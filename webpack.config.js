@@ -8,8 +8,8 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const path = require('path');
 const rimraf = require('rimraf');
 
-function addHash(template, hash) {
-    return DEVELOPMENT
+function addHash(template, hash, onlyDev) {
+    return DEVELOPMENT || onlyDev
         ? `${template}?hash=[${hash}]`
         : template.replace(/\.[^.]+$/, `.[${hash}]$&`);
 }
@@ -19,7 +19,6 @@ module.exports = {
     entry: { main: './main' },
     output: {
         path:       __dirname + '/public',
-        publicPath: '/',
         filename:   addHash('[name].js', 'hash')
     },
 
@@ -43,8 +42,8 @@ module.exports = {
             loader: 'style!css'
         },
         {
-            test:   /\.(png|jpg|svg|ttf|eot|woff|woff2)$/,
-            loader: addHash('file?name=[path][name].[ext]', 'hash:6')
+            test:   /\.(png|jpg|svg|ttf|eot|woff|woff2|mp3|json)$/,
+            loader: addHash('file?name=[path][name].[ext]', 'hash:6', true)
         }]
     },
 

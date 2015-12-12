@@ -1,13 +1,13 @@
 "use strict";
 import './circle.styl';
 import template from './circle.jade';
-import Widget from '../../widget';
+import BaseTimer from '../../widget/base.timer';
 
 const START_ANGLE_LEFT_HALF =  135;
 const START_ANGLE_RIGHT_HALF =  -45;
 const MAX_ANGLE = 360;
 
-export default class CircleTimer extends Widget {
+export default class CircleTimer extends BaseTimer {
 
   _render() {
     super._render();
@@ -17,9 +17,7 @@ export default class CircleTimer extends Widget {
     this._content = this._container.querySelector('.circle-timer_content');
   }
 
-  get content() {
-    return this._content;
-  }
+  get content() { return this._content; }
 
   updateState(dec) {
     let rightCoefficient = dec > .5 ? .5 : dec;

@@ -1,41 +1,66 @@
 "use strict";
-import Widget from '../widget';
+import BaseTimer from '../widget/base.timer';
 import CircleTimer from './circle-timer';
 import NumericTimer from './numeric-timer';
 import requestAnimationFrame from '../utils/requestAnimationFrame'
 
 const DEFAULT_INTERVAL = 25 * 60 * 1000;
-const COMPLETE_CODE = {
-    COMPLETE: 1,
-    STOPPED: 2
-}
+const STATE_CODES = {
+    RUN: 0,
+    WAITING: 1,
+    STOPPED: 2,
+    COMPLETE: 3
+};
 
-export default class Timer extends Widget {
-    constructor(element, interval) {
-        super(element, interval);
-        this.interval = interval ||DEFAULT_INTERVAL;
-        this._elapsedTime = 0;
-    }
-
+export default class Timer extends BaseTimer {
     get interval(){ return this._interval; }
     set interval(interval) { this._interval = interval; }
 
-    _render(interval){
+    get state() {return this._state;}
+    set state(state) {
+        super.state = state;
+        this._numericTimer.state = state;
+    }
+
+    _render(interval) {
         super._render();
+        this.interval = interval ||DEFAULT_INTERVAL;
+        this._elapsedTime = 0;
+
         this._circleTimer = new CircleTimer(this._container);
         this._numericTimer = new NumericTimer(this._circleTimer.content, interval);
+        this.state = STATE_CODES.WAITING;
+        this._attachEventHandlers();
+    }
+
+    _attachEventHandlers() {
+        var timer = this;
+        this._container.addEventListener("click", function(){
+            if(timer.state === STATE_CODES.COMPLETE)
+                return;
+            if(timer.state === STATE_CODES.RUN)
+                timer.stop();
+            else
+                timer.start();
+        })
     }
 
     start() {
         let that = this;
+        this.state = STATE_CODES.RUN;
+        this._startTime = new Date();
+
         let frame = function(){
             let complete = that._frame();
             if(complete)
                 return;
             requestAnimationFrame(frame);
         };
-        this._startTime = new Date();
         requestAnimationFrame(frame);
+    }
+
+    stop() {
+        this.state = STATE_CODES.STOPPED;
     }
 
     _frame() {
@@ -49,9 +74,10 @@ export default class Timer extends Widget {
         this._numericTimer.updateState(lastDuration);
 
         if(this._elapsedTime >= this.interval){
-            this._complete(COMPLETE_CODE.COMPLETE);
-            return COMPLETE_CODE.COMPLETE;
+            this._complete();
+
         }
+        return this.state;
     }
 
     _getLastDuration(){
@@ -59,7 +85,7 @@ export default class Timer extends Widget {
         return k > 1 ? 1 : k;
     }
 
-    _complete(code) {
-
+    _complete() {
+        this.state = STATE_CODES.COMPLETE;
     }
 }

@@ -10,9 +10,14 @@
     height 100%
     vertical-align middle
 
-  &_content
+  &_minutes,
+  &_seconds,
+  &_deliver
     display inline-block
     vertical-align middle
 
     font-size 100px
     font-weight 100
+
+  .-state1 > & > &_deliver
+    animation blink 3s infinite

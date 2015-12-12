@@ -16,7 +16,25 @@
   font-weight 400
   src local('Open Sans'), local('OpenSans'), url('fonts/OpenSans-Regular.ttf') format('truetype')
 
+@keyframes blink {
+  0% {
+    opacity: .25;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: .25;
+  }
+}
+
+html
+  -webkit-user-select none
+  user-select none
+  height 100%
+
 body
+  height 100%
   background #222c36
   font-family 'Open Sans', sans-serif
   color #333

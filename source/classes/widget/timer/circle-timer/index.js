@@ -1,7 +1,7 @@
 "use strict";
 import './circle.styl';
 import template from './circle.jade';
-import BaseTimer from '../../widget/base.timer';
+import BaseTimer from '../../base.timer';
 
 const START_ANGLE_LEFT_HALF =  135;
 const START_ANGLE_RIGHT_HALF =  -45;

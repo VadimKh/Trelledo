@@ -1,0 +1,29 @@
+@import '../../../utils'
+
+.toolbar
+  line-height toRem(TOOLBAR_HEIGHT)
+  color TEXT_COLOR
+
+  &_title
+    font-size toRem(20)
+    font-weight 300
+    text-transform uppercase
+    text-align center
+
+  &_right-bar
+    position absolute
+    top 0
+    bottom 0
+    right 0
+
+  &_icon
+    width toRem(30)
+    height toRem(30)
+    margin toRem(5)
+    background-color TEXT_COLOR
+    -webkit-mask-size 100% 100%
+    -webkit-mask-position 50% 50%
+    -webkit-mask-repeat no-repeat
+
+  &_settings
+    -webkit-mask-image url(settings.svg)

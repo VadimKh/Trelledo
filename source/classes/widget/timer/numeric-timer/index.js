@@ -1,7 +1,7 @@
 "use strict";
 import './numeric.styl';
 import template from './numeric.jade';
-import BaseTimer from '../../widget/base.timer';
+import BaseTimer from '../../base.timer';
 
 const round = Math.round;
 const floor = Math.floor;

@@ -57,30 +57,3 @@ border-size = 5px
     bottom 10%
     left 10%
     right 10%
-
-  &_pause
-    &:before, &:after
-      display block
-      content ' '
-
-      position absolute
-      top 25%
-      bottom 25%
-
-      width 10px
-
-      background currentColor
-      border-radius 10px
-      z-index 1
-      -webkit-user-select none
-
-      opacity 0
-
-    &:before
-      left 40%
-    &:after
-      right 40%
-
-  .-state2 > & > &_pause
-    &:before, &:after
-      animation blink 3s infinite

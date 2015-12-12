@@ -1,8 +1,10 @@
 "use strict";
-import BaseTimer from '../widget/base.timer';
+import audio from '../../../audio/complete.mp3';
+
+import BaseTimer from '../base.timer';
 import CircleTimer from './circle-timer';
 import NumericTimer from './numeric-timer';
-import requestAnimationFrame from '../utils/requestAnimationFrame'
+import requestAnimationFrame from '../../utils/requestAnimationFrame'
 
 const DEFAULT_INTERVAL = 25 * 60 * 1000;
 const STATE_CODES = {
@@ -31,6 +33,8 @@ export default class Timer extends BaseTimer {
         this._numericTimer = new NumericTimer(this._circleTimer.content, interval);
         this.state = STATE_CODES.WAITING;
         this._attachEventHandlers();
+
+        this._completeSound = new Audio('audio/complete.mp3');
     }
 
     _attachEventHandlers() {
@@ -87,5 +91,6 @@ export default class Timer extends BaseTimer {
 
     _complete() {
         this.state = STATE_CODES.COMPLETE;
+        this._completeSound.play();
     }
 }

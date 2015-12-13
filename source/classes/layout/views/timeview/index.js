@@ -11,6 +11,6 @@ export default class TimeView extends View {
     _renderViewContent() {
         this._view.innerHTML = template();
         this._timerElement = this._view.querySelector('.timer');
-        this._timer = new Timer(this._timerElement, 2 * 60 * 1000);
+        this._timer = new Timer(this._timerElement,  5 * 1000);
     }
 }

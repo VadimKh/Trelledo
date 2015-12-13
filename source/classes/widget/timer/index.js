@@ -25,6 +25,7 @@ export default class Timer extends BaseTimer {
     }
 
     _render(interval) {
+        this._sheduleID = 1;
         super._render();
         this.interval = interval ||DEFAULT_INTERVAL;
         this._elapsedTime = 0;
@@ -53,6 +54,7 @@ export default class Timer extends BaseTimer {
         let that = this;
         this.state = STATE_CODES.RUN;
         this._startTime = new Date();
+        this._sheduleNotify();
 
         let frame = function(){
             let complete = that._frame();
@@ -65,6 +67,29 @@ export default class Timer extends BaseTimer {
 
     stop() {
         this.state = STATE_CODES.STOPPED;
+        this._cleanNotify();
+    }
+
+    _sheduleNotify(){
+        if(!cordova)
+            return;
+        cordova.plugins.notification.local.schedule({
+            id: this._sheduleID,
+            text: "Single Notification",
+            sound: 'file://audio/complete.mp3',
+            at: new Date(this._startTime.getTime() + this.interval - this._elapsedTime),
+            led: '222C36'
+        });
+    }
+
+    _cleanNotify(){
+        if(!cordova)
+            return;
+        let oldID = this._sheduleID;
+        this._sheduleID += 1;
+        cordova.plugins.notification.local.cancel(oldID, function(){
+            cordova.plugins.notification.local.clear(oldID);
+        });
     }
 
     _frame() {
@@ -91,6 +116,6 @@ export default class Timer extends BaseTimer {
 
     _complete() {
         this.state = STATE_CODES.COMPLETE;
-        this._completeSound.play();
+        //this._completeSound.play();
     }
 }

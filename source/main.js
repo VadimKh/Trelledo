@@ -1,5 +1,4 @@
 "use strict";
-import './manifest.json';
 import './icon.png';
 import './main.styl';
 

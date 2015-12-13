@@ -16,6 +16,7 @@
 </head>
 <body>
 <div id="viewport"></div>
+<script type="text/javascript" src="cordova.js"></script>
 {% for (var chunk in o.htmlWebpackPlugin.files.chunks) { %}
 <script src="{%=o.htmlWebpackPlugin.files.chunks[chunk].entry %}"></script>
 {% } %}

@@ -18,7 +18,7 @@ module.exports = {
     context: path.join(__dirname, 'source'),
     entry: { main: './main' },
     output: {
-        path:       __dirname + '/public',
+        path:       __dirname + '/public/www',
         filename:   addHash('[name].js', 'hash')
     },
 

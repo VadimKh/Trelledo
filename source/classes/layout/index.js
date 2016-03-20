@@ -1,20 +1,43 @@
 "use strict";
-import Widget from '../widget';
 import './layout.styl';
-import template from './layout.jade';
-
-import Toolbar from './toolbar';
+import Widget from '../widget';
 
 import TimeView from './views/timeview';
+import LoginView from './views/login';
+
+const defaultView = 'login';
+const Routes = {
+  'timer': TimeView,
+  'login': LoginView
+};
 
 export default class Layout extends Widget {
-    _render() {
-        this._container.innerHTML = template();
-        this._toolbarElement= this._container.querySelector('.layout_toolbar');
-        this._toolbar = new Toolbar(this._toolbarElement, {title: 'Test'});
+  _render() {
+    this._views = {};
+    this._renderView(defaultView);
 
-        this._content = this._container.querySelector('.layout_content');
-        this._view = new TimeView();
-        this._view.render(this._content);
-    }
+    document.addEventListener('navigate', this._route.bind(this));
+  }
+
+  _route(e) {
+    this._renderView(e.detail.url, e.detail.options);
+  }
+
+  _renderView(viewName, state) {
+    let view = this._getViewByName(viewName);
+    this._setView(view, state);
+  }
+
+  _setView(view, state) {
+    this._currentView && this._container.removeChild(this._currentView.view);
+    this._currentView = view;
+    this._container.appendChild(this._currentView.render());
+  }
+
+  _getViewByName(viewName) {
+    if (!this._views[viewName])
+      this._views[viewName] = new Routes[viewName];
+
+    return this._views[viewName];
+  }
 }

@@ -14,6 +14,8 @@ const STATE_CODES = {
     COMPLETE: 3
 };
 
+const cordova = window.cordova;
+
 export default class Timer extends BaseTimer {
     get interval(){ return this._interval; }
     set interval(interval) { this._interval = interval; }

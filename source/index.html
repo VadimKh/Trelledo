@@ -17,6 +17,8 @@
 <body>
 <div id="viewport"></div>
 <script type="text/javascript" src="cordova.js"></script>
+<script type="text/javascript" src="vendors/jquery-2.2.2.min.js"></script>
+<script type="text/javascript" src="vendors/client.js?key=145ab72d8820e386341eda162214b61a"></script>
 {% for (var chunk in o.htmlWebpackPlugin.files.chunks) { %}
 <script src="{%=o.htmlWebpackPlugin.files.chunks[chunk].entry %}"></script>
 {% } %}
